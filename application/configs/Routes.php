@@ -12,6 +12,11 @@ class Routes
                 'controller' => 'tasks',
                 'action' => 'add'
             ],
+            
+            'api/estimate/task' => [
+                'controller' => 'tasks',
+                'action' => 'setEstimation'
+            ],
         ];
     }
 

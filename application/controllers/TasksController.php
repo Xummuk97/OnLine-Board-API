@@ -16,8 +16,6 @@ class TasksController extends Controller
     {
         $this->headerAPI();
         
-        $data = $_POST;
-        
         $title = Valid::postVariable('title');
         $description = Valid::postVariable('description');
         
@@ -40,5 +38,38 @@ class TasksController extends Controller
         $this->sendResponse(200, [
             'id' => 'TASK-' . $insert_id
         ]);
+    }
+    
+    public function setEstimationAction()
+    {
+        $this->headerAPI();
+        
+        $id = Valid::postVariable('id');
+        $estimation = Valid::postVariable('estimation');
+        
+        $errors = [];
+        
+        if (empty($id))
+        {
+            $errors[] = [ 'id' => 'Укажите идентификатор задачи' ];
+        }
+        
+        if (empty($estimation))
+        {
+            $errors[] = [ 'estimation' => 'Укажите оценку задачи' ];
+        }
+        
+        $this->sendResponseFieldErrors(400, $errors);
+        
+        str_replace('TASK-', '', $id);
+        
+        if (!$this->models['Tasks']->find($id))
+        {
+            $this->sendResponseGlobalError(400, 'Не найдена запись по указанному идентификатору задачи');
+        }
+        
+        $this->models['Tasks']->setEstimation($id, $estimation);
+        
+        $this->sendResponse(200);
     }
 }

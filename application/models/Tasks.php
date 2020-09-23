@@ -15,4 +15,19 @@ class Tasks extends Model
         
         return $this->db->getInsertId();
     }
+    
+    public function find($id)
+    {
+        return $this->db->column('SELECT id FROM tasks WHERE id = :id', [
+            'id' => $id,
+        ]) != null;
+    }
+    
+    public function setEstimation($id, $estimation)
+    {
+        $this->db->query('UPDATE tasks SET estimation = :estimation WHERE id = :id', [
+            'id' => $id,
+            'estimation' => $estimation,
+        ]);
+    }
 }

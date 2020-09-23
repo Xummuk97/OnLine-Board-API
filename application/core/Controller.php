@@ -70,7 +70,7 @@ abstract class Controller
         exit;
     }
     
-    public function sendResponse($code, $response)
+    public function sendResponse($code, $response = [])
     {
         # Выводим ответ
         http_response_code($code);
