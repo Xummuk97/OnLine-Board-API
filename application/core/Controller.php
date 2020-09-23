@@ -42,21 +42,13 @@ abstract class Controller
         header("Access-Control-Allow-Origin: *");
         header("Content-Type: application/json; charset=UTF-8");
     }
-    
-    public function sendError($error)
-    {
-        # Выводим ответ в виде ошибки, в котором указываем какое поле не заполнено
-        echo json_encode([ 
-            'Errors' => [
-                $error
-            ],
-        ], JSON_UNESCAPED_UNICODE);
-    }
-    
-    public function sendResponseFieldErrors($errors)
+
+    public function sendResponseFieldErrors($code, $errors)
     {
         if (!empty($errors))
         {
+            http_response_code($code);
+            
             echo json_encode([ 
                 'Errors' => [
                     'Fields' => $errors
@@ -66,8 +58,10 @@ abstract class Controller
         }
     }
     
-    public function sendResponseGlobalError($error)
+    public function sendResponseGlobalError($code, $error)
     {
+        http_response_code($code);
+        
         echo json_encode([ 
             'Errors' => [
                 'Global' => $error
