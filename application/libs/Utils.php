@@ -7,12 +7,12 @@ class Utils
     static public function fmtTimeToInt($str)
     {
         $matches = [];
-        preg_match_all('/(\d+)m/', $str, $matches);
+        preg_match_all('/([0-9]*[.,]?[0-9]+)m/', $str, $matches);
         $arr_minutes = $matches[1];
         
         unset($matches);
         
-        preg_match_all('/(\d+)h/', $str, $matches);
+        preg_match_all('/([0-9]*[.,]?[0-9]+)h/', $str, $matches);
         $arr_hours = $matches[1];
         
         $seconds = 0;
