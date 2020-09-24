@@ -98,5 +98,6 @@ class TasksController extends Controller
         $this->models['Tasks']->setClose($taskId);
         
         $this->sendResponse(200);
+        
     }
 }
