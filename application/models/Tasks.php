@@ -30,4 +30,26 @@ class Tasks extends Model
             'estimation' => $estimation,
         ]);
     }
+    
+    public function setSprint($sprintId, $taskId)
+    {
+        $this->db->query('UPDATE tasks SET sprint_id = :sprintId WHERE id = :taskId', [
+            'sprintId' => $sprintId,
+            'taskId' => $taskId,
+        ]);
+    }
+    
+    public function setClose($taskId)
+    {
+        $this->db->query('UPDATE tasks SET is_close = 1 WHERE id = :taskId', [
+            'taskId' => $taskId,
+        ]);
+    }
+    
+    public function getFromSprint($sprintId)
+    {
+        return $this->db->row('SELECT * FROM tasks WHERE sprint_id = :sprintId', [
+            'sprintId' => $sprintId,
+        ]);
+    }
 }

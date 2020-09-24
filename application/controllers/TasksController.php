@@ -72,4 +72,31 @@ class TasksController extends Controller
         
         $this->sendResponse(200);
     }
+    
+    public function setCloseAction()
+    {
+        $this->headerAPI();
+        
+        $taskId = Valid::postVariable('taskId');
+        
+        $errors = [];
+        
+        if (empty($taskId))
+        {
+            $errors[] = [ 'taskId' => 'Укажите идентификатор задачи' ];
+        }
+        
+        $this->sendResponseFieldErrors(400, $errors);
+        
+        $taskId = str_replace('TASK-', '', $taskId);
+        
+        if (!$this->models['Tasks']->find($taskId))
+        {
+            $this->sendResponseGlobalError(400, 'Не найдена запись по указанному идентификатору задачи');
+        }
+        
+        $this->models['Tasks']->setClose($taskId);
+        
+        $this->sendResponse(200);
+    }
 }
