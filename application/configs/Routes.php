@@ -37,6 +37,11 @@ class Routes
                 'controller' => 'tasks',
                 'action' => 'setClose'
             ],
+            
+            'api/sprints/close' => [
+                'controller' => 'sprints',
+                'action' => 'setClose'
+            ],
         ];
     }
 

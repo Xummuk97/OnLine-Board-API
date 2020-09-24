@@ -52,4 +52,11 @@ class Tasks extends Model
             'sprintId' => $sprintId,
         ]);
     }
+    
+    public function checkAllCloseFromSprint($sprintId)
+    {
+        return $this->db->row('SELECT is_close, sprint_id FROM tasks WHERE sprint_id = :sprintId AND is_close = 0', [
+            'sprintId' => $sprintId,
+        ]) != null;
+    }
 }

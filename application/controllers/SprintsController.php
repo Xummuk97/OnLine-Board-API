@@ -154,4 +154,34 @@ class SprintsController extends Controller
         
         $this->sendResponse(200);
     }
+    
+    public function setCloseAction()
+    {
+        $this->headerAPI();
+        
+        $sprintId = Valid::postVariable('sprintId');
+        
+        $errors = [];
+        
+        if (empty($sprintId))
+        {
+            $errors[] = [ 'sprintId' => 'Укажите идентификатор спринта' ];
+        }
+        
+        $this->sendResponseFieldErrors(400, $errors);
+        
+        if (!$this->models['Sprints']->find($sprintId))
+        {
+            $this->sendResponseGlobalError(400, 'Спринт с указанным идентификатором не найден');
+        }
+        
+        if ($this->models['Tasks']->checkAllCloseFromSprint($sprintId))
+        {
+            $this->sendResponseGlobalError(400, 'В спринте есть незакрытые задачи');
+        }
+        
+        $this->models['Sprints']->setClose($sprintId);
+        
+        $this->sendResponse(200);
+    }
 }

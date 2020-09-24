@@ -36,4 +36,11 @@ class Sprints extends Model
             'id' => $id,
         ]);
     }
+    
+    public function setClose($id)
+    {
+        $this->db->query('UPDATE sprints SET is_start = 0, is_close = 1 WHERE id = :id', [
+            'id' => $id,
+        ]);
+    }
 }
