@@ -35,19 +35,17 @@ class TasksController extends Controller
         $description = Valid::postVariable('description');
         
         # Проводим валидацию данных
-        $errors = [];
-        
-        if (empty($title))
-        {
-            $errors[] = [ 'title' => 'Укажите заголовок задачи' ];
-        }
-        
-        if (empty($description))
-        {
-            $errors[] = [ 'description' => 'Укажите описание задачи' ];
-        }
-        
-        $this->sendResponseFieldErrors(400, $errors);
+        $this->checkEmptyVariable([
+            'title' => [
+                'value' => $title,
+                'error' => 'Укажите заголовок задачи',
+            ],
+            
+            'description' => [
+                'value' => $description,
+                'error' => 'Укажите описание задачи',
+            ],
+        ]);
         
         # Добавляем задачу
         # Получаем индекс добавленной задачи
@@ -75,19 +73,17 @@ class TasksController extends Controller
         $estimation = Valid::postVariable('estimation');
         
         # Проводим валидацию данных
-        $errors = [];
-        
-        if (empty($id))
-        {
-            $errors[] = [ 'id' => 'Укажите идентификатор задачи' ];
-        }
-        
-        if (empty($estimation))
-        {
-            $errors[] = [ 'estimation' => 'Укажите оценку задачи' ];
-        }
-        
-        $this->sendResponseFieldErrors(400, $errors);
+        $this->checkEmptyVariable([
+            'id' => [
+                'value' => $id,
+                'error' => 'Укажите идентификатор задачи',
+            ],
+            
+            'estimation' => [
+                'value' => $estimation,
+                'error' => 'Укажите оценку задачи',
+            ],
+        ]);
         
         # Удаляем из идентификатора задачи 'TASK-'
         str_replace('TASK-', '', $id);
@@ -119,15 +115,13 @@ class TasksController extends Controller
         $taskId = Valid::postVariable('taskId');
         
         # Проводим валидацию данных
-        $errors = [];
-        
-        if (empty($taskId))
-        {
-            $errors[] = [ 'taskId' => 'Укажите идентификатор задачи' ];
-        }
-        
-        $this->sendResponseFieldErrors(400, $errors);
-        
+        $this->checkEmptyVariable([
+            'taskId' => [
+                'value' => $taskId,
+                'error' => 'Укажите идентификатор задачи',
+            ],
+        ]);
+
         # Удаляем из идентификатора задачи 'TASK-'
         $taskId = str_replace('TASK-', '', $taskId);
         

@@ -76,4 +76,19 @@ abstract class Controller
         http_response_code($code);
         echo json_encode($response, JSON_UNESCAPED_UNICODE);
     }
+    
+    public function checkEmptyVariable($array)
+    {
+        $errors = [];
+        
+        foreach ($array as $key => $element)
+        {
+            if (empty($element['value']))
+            {
+                $errors[] = [ $key => $element['error'] ];
+            }
+        }
+        
+        $this->sendResponseFieldErrors(400, $errors);
+    }
 }

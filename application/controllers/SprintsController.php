@@ -36,19 +36,17 @@ class SprintsController extends Controller
         $year = Valid::postVariable('Year');
         
         # Проводим валидацию данных
-        $errors = [];
-        
-        if (empty($week))
-        {
-            $errors[] = [ 'Week' => 'Укажите неделю спринта' ];
-        }
-        
-        if (empty($year))
-        {
-            $errors[] = [ 'Year' => 'Укажите год спринта' ];
-        }
-        
-        $this->sendResponseFieldErrors(400, $errors);
+        $this->checkEmptyVariable([
+            'Week' => [
+                'value' => $week,
+                'error' => 'Укажите неделю спринта',
+            ],
+             
+             'Year' => [
+                'value' => $year,
+                'error' => 'Укажите год спринта',
+            ],
+        ]);
         
         # Удаляем первые 2 цифры у года
         $id = substr($year, 2) . '-' . $week;
@@ -82,14 +80,12 @@ class SprintsController extends Controller
         $sprintId = Valid::postVariable('sprintId');
         
         # Проводим валидацию данных
-        $errors = [];
-        
-        if (empty($sprintId))
-        {
-            $errors[] = [ 'sprintId' => 'Укажите идентификатор спринта' ];
-        }
-        
-        $this->sendResponseFieldErrors(400, $errors);
+        $this->checkEmptyVariable([
+            'sprintId' => [
+                'value' => $sprintId,
+                'error' => 'Укажите идентификатор спринта',
+            ],
+        ]);
         
         # Ищем спринт с введённым идентификатором
         if (!$this->models['Sprints']->find($sprintId))
@@ -176,19 +172,17 @@ class SprintsController extends Controller
         $taskId = Valid::postVariable('taskId');
         
         # Проводим валидацию данных
-        $errors = [];
-        
-        if (empty($sprintId))
-        {
-            $errors[] = [ 'sprintId' => 'Укажите идентификатор спринта' ];
-        }
-        
-        if (empty($taskId))
-        {
-            $errors[] = [ 'taskId' => 'Укажите идентификатор задачи' ];
-        }
-        
-        $this->sendResponseFieldErrors(400, $errors);
+        $this->checkEmptyVariable([
+            'sprintId' => [
+                'value' => $sprintId,
+                'error' => 'Укажите идентификатор спринта',
+            ],
+            
+            'taskId' => [
+                'value' => $taskId,
+                'error' => 'Укажите идентификатор задачи',
+            ],
+        ]);
         
         # Ищем спринт с указанным идентификатором
         if (!$this->models['Sprints']->find($sprintId))
@@ -226,14 +220,12 @@ class SprintsController extends Controller
         $sprintId = Valid::postVariable('sprintId');
         
         # Проводим валидацию данных
-        $errors = [];
-        
-        if (empty($sprintId))
-        {
-            $errors[] = [ 'sprintId' => 'Укажите идентификатор спринта' ];
-        }
-        
-        $this->sendResponseFieldErrors(400, $errors);
+        $this->checkEmptyVariable([
+            'sprintId' => [
+                'value' => $sprintId,
+                'error' => 'Укажите идентификатор спринта',
+            ],
+        ]);
         
         # Ищем спринт по идентификатору
         if (!$this->models['Sprints']->find($sprintId))
